@@ -18,7 +18,14 @@ const signUpForm = () => (
                     <label className="text-light">Password</label>
                     <input className="form-control" type="password" />
                 </div>
-                <button className="btn btn-success btn-block">Submit</button>
+                <div className="form-group">
+                    <label className="text-light"> </label>
+                </div>
+                <div class="d-grid mx-auto">
+                    <button class="btn btn-success" type="button">
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
     </div>
