@@ -17,11 +17,6 @@ const signInForm = () => (
                 <div className="form-group">
                     <label className="text-light"> </label>
                 </div>
-                <div class="d-grid mx-auto">
-                    <button class="btn btn-success" type="button">
-                        Submit
-                    </button>
-                </div>
             </form>
         </div>
     </div>
