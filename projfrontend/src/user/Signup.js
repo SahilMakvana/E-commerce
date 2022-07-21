@@ -21,7 +21,15 @@ const Signup = () => {
     const onSubmit = (event) => {
         event.preventDefault();
         setValues({ ...values, error: false });
-        signup({ name, email, password }).then();
+        signup({ name, email, password })
+            .then((data) => {
+                if (data.error) {
+                    setValues({ ...values, error: data.error, success: false });
+                } else {
+                    setValues({ ...values, name: "", email: "", password: "", error: "", success: true });
+                }
+            })
+            .catch(console.log("Error in signup"));
     };
 
     const signUpForm = () => (
@@ -30,21 +38,21 @@ const Signup = () => {
                 <form>
                     <div className="form-group">
                         <label className="text-light">Name</label>
-                        <input className="form-control" onChange={handleChange("name")} type="text" />
+                        <input className="form-control" onChange={handleChange("name")} type="text" value={name} />
                     </div>
                     <div className="form-group">
                         <label className="text-light">Email</label>
-                        <input className="form-control" onChange={handleChange("email")} type="email" />
+                        <input className="form-control" onChange={handleChange("email")} type="email" value={email} />
                     </div>
                     <div className="form-group">
                         <label className="text-light">Password</label>
-                        <input className="form-control" onChange={handleChange("password")} type="password" />
+                        <input className="form-control" onChange={handleChange("password")} type="password" value={password} />
                     </div>
                     <div className="form-group">
                         <label className="text-light"> </label>
                     </div>
                     <div class="d-grid mx-auto">
-                        <button class="btn btn-success" type="button">
+                        <button onClick={onSubmit} class="btn btn-success" type="button">
                             Submit
                         </button>
                     </div>
@@ -53,9 +61,36 @@ const Signup = () => {
         </div>
     );
 
+    const successMessage = () => {
+        return (
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div className="alert alert-success" style={{ display: success ? "" : "none" }}>
+                        New Account was created successfully. Please <Link to="/signin">Login Here</Link>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const errorMessage = () => {
+        return (
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
+                        {error}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <Base title="Signup Page" description="A page for user Signup">
+            {successMessage()}
+            {errorMessage()}
             {signUpForm()}
+            <p className="text-white text-center">{JSON.stringify(values)}</p>
         </Base>
     );
 };
