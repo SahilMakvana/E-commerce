@@ -21,11 +21,11 @@ const Signin = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        setValues({ ...values, error: false, loading: false });
-        signInForm({ email, password })
+        setValues({ ...values, error: false, loading: true });
+        signin({ email, password })
             .then((data) => {
                 if (data.error) {
-                    setValues({ ...values, error: data.error, loading: true });
+                    setValues({ ...values, error: data.error, loading: false });
                 } else {
                     authenticate(data, () => {
                         setValues({
@@ -39,6 +39,7 @@ const Signin = () => {
     };
 
     const performRedirect = () => {
+        // TODO: Complete the redirect
         if (didRedirect) {
             if (user && user.role === 1) {
                 return <p>Redirect to Admin</p>;
