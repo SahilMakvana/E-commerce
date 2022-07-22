@@ -68,4 +68,3 @@ const Menu = ({ history }) => {
 };
 
 export default withRouter(Menu);
-export default withRouter(Menu);
