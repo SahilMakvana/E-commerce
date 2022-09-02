@@ -1,5 +1,4 @@
 const { response } = require("express");
-const category = require("../models/category");
 const Category = require("../models/category");
 
 exports.getCategoryId = (req, res, next, id) => {
@@ -10,9 +9,8 @@ exports.getCategoryId = (req, res, next, id) => {
             });
         }
         req.category = cate;
+        next();
     });
-
-    next();
 };
 
 exports.createCategory = (req, res) => {
@@ -23,7 +21,7 @@ exports.createCategory = (req, res) => {
                 error: "Not able to save category in DB",
             });
         }
-        res.json({ category });
+        res.json(category);
     });
 };
 

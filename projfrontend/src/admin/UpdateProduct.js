@@ -39,6 +39,20 @@ const UpdateProduct = ({ match }) => {
                     stock: data.stock,
                     formData: new FormData(),
                 });
+                preloadCategories();
+            }
+        });
+    };
+
+    const preloadCategories = () => {
+        getCategories().then((data) => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({
+                    categories: data,
+                    formData: new FormData(),
+                });
             }
         });
     };
@@ -50,7 +64,8 @@ const UpdateProduct = ({ match }) => {
     const onSubmit = (event) => {
         event.preventDefault();
         setValues({ ...values, error: "", loading: true });
-        updateProduct(user._id, token, formData).then((data) => {
+        updateProduct(match.params.productId, user._id, token, formData).then((data) => {
+            console.log(data);
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -69,6 +84,7 @@ const UpdateProduct = ({ match }) => {
     };
 
     const handleChange = (name) => (event) => {
+        console.log(event);
         const value = name === "photo" ? event.target.files[0] : event.target.value;
         formData.set(name, value);
         setValues({ ...values, [name]: value });
@@ -76,7 +92,7 @@ const UpdateProduct = ({ match }) => {
 
     const successMessage = () => (
         <div className="alert alert-success mt-3" style={{ display: updateProduct ? "" : "none" }}>
-            <h4>{updateProduct} Created Successfully</h4>
+            <h4>{updateProduct} Updated Successfully</h4>
         </div>
     );
 
@@ -113,7 +129,7 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <button type="submit" onClick={onSubmit} className="btn btn-outline-success mb-3">
-                Create Product
+                Update Product
             </button>
         </form>
     );
